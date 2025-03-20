@@ -17,7 +17,7 @@ public class UssdController {
 // Initialize the userinput ussd response
         StringBuilder response = new StringBuilder();
 
-// Trim any leading/trailing whitespace from the user input
+// Trim any  whitespace from the user input
         text = text.trim();
 
 // Debug: Print the text value to check
