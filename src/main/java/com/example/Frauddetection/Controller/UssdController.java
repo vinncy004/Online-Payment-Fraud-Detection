@@ -1,4 +1,4 @@
-package com.example.africastalking.api.demo;
+package com.example.Frauddetection.Controller;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
