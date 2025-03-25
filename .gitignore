@@ -1,34 +1,59 @@
-HELP.md
-target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+# Java, Maven, Gradle, and IntelliJ specific files
+/.idea/
+/*.iml
+/.classpath
+/.project
+/target/
+/out/
+/*.log
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
+# Ignore the build directories
+/target/
+/build/
 
-### IntelliJ IDEA ###
-.idea
+# Ignore compiled Java files
+*.class
+
+# Ignore Spring Boot executable jars
+*.jar
+*.war
+
+# IntelliJ IDEA project files
+/.idea/
 *.iws
 *.iml
 *.ipr
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
+# Node.js (if you are using it for frontend with Webpack or npm/yarn)
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
 
-### VS Code ###
-.vscode/
-src/test/*
+# Ignore IDE-specific files
+/.idea/
+
+# Ignore all HTML, CSS, and JS files if you do not want them tracked by Git
+*.html
+*.css
+*.js
+
+# You can optionally specify particular folders to ignore or not track
+# if you have frontend files under specific directories like src/main/resources/static,
+# you can exclude those as well, for example:
+# /src/main/resources/static/**/*.html
+# /src/main/resources/static/**/*.css
+# /src/main/resources/static/**/*.js
+
+# Maven Wrapper
+/mvnw
+/mvnw.cmd
+/.mvn/
+
+# Gradle Wrapper
+/gradlew
+/gradlew.bat
+/.gradle/
+
+# Ignore .env files (if you are using them for environment variables)
+*.env

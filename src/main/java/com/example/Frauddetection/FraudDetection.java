@@ -1,14 +1,14 @@
-package com.example.africastalking.api.demo;
+package com.example.Frauddetection;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AfricastalkingApiDemoApplication {
+public class FraudDetection {
 
 	public static void main(String[] args) {
 
-		SpringApplication.run(AfricastalkingApiDemoApplication.class, args);
+		SpringApplication.run(FraudDetection.class, args);
 	}
 
 }
