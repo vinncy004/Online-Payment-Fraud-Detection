@@ -43,90 +43,9 @@
         </ul>
  <script type="text/javascript">
 
-    function locationChangeNotifier() {
-    // Check if browser supports both Notification and Geolocation APIs
-    if (!("Notification" in window) || !("geolocation" in navigator)) {
-        console.log("This browser doesn't support notifications or geolocation");
-        return;
-    }
-
-    // Request notification permission
-    Notification.requestPermission().then(permission => {
-        if (permission !== "granted") {
-            console.log("Notification permission denied");
-            return;
-        }
-
-        // Store previous position
-        let previousPosition = null;
-
-        // Options for geolocation watching
-        const geoOptions = {
-            enableHighAccuracy: true,
-            timeout: 5000,
-            maximumAge: 0
-        };
-
-        // Function to calculate distance between two coordinates (in kilometers)
-        function calculateDistance(lat1, lon1, lat2, lon2) {
-            const R = 6371; // Earth's radius in kilometers
-            const dLat = (lat2 - lat1) * Math.PI / 180;
-            const dLon = (lon2 - lon1) * Math.PI / 180;
-            const a = 
-                Math.sin(dLat/2) * Math.sin(dLat/2) +
-                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
-                Math.sin(dLon/2) * Math.sin(dLon/2);
-            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-            return R * c;
-        }
-
-        // Watch position changes
-        navigator.geolocation.watchPosition(
-            (position) => {
-                const currentPosition = {
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude,
-                    timestamp: new Date(position.timestamp)
-                };
-
-                // If we have a previous position, check if location changed significantly
-                if (previousPosition) {
-                    const distance = calculateDistance(
-                        previousPosition.latitude,
-                        previousPosition.longitude,
-                        currentPosition.latitude,
-                        currentPosition.longitude
-                    );
-
-                    // Notify if moved more than 0.1 km (100 meters)
-                    if (distance > 0.1) {
-                        const notification = new Notification("Location Changed!", {
-                            body: `Moved ${distance.toFixed(2)} km\nNew position: ${currentPosition.latitude.toFixed(4)}, ${currentPosition.longitude.toFixed(4)}`,
-                            icon: 'http://127.0.0.1:5500/Online-Payment-Fraud-Detection/page1.html' // Optional: add your own icon URL
-                        });
-
-                        // Optional: Log to console
-                        console.log(`Location changed by ${distance.toFixed(2)} km`);
-                    }
-                }
-
-                // Update previous position
-                previousPosition = currentPosition;
-            },
-            (error) => {
-                console.error("Geolocation error:", error.message);
-                new Notification("Location Error", {
-                    body: `Unable to track location: ${error.message}`
-                });
-            },
-            geoOptions
-        );
-    });
-}
+   
 
 
-// Usage example:
- locationChangeNotifier();
 
  function userAuth(){
     // Import mysql2 package
