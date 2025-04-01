@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+section{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background:url('Assets/bg.jpg')no-repeat;
+    background-size: cover;
+    background-position: center ;
+
+}
+
+
+
+
+
+.login-box{
+    position: relative;
+    width: 400px;
+    height: 450px;
+    background :transparent;
+    justify-content: center;
+    border-radius: 20px;
+    align-items: center;
+    border: 2px solid rgba(255, 255, 255, .5);
+    display: flex;
+    backdrop-filter: blur(15px);
+}
+h2{
+    font-size:  2em;
+    text-align: center;
+    color: #fff;
+}
+.input-box{
+    position: relative;
+    width: 310px;
+    margin: 30px 0;
+    border-bottom: 2px solid #fff;
+    display: flex;
+    align-items: center;
+}
+.input-box label{
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    font-size: 1em;
+    color: #fff;
+    pointer-events: none;
+   transition: .5s; 
+}
+.input-box input:focus~label, 
+.input-box input:valid~label{
+    top: -5px;
+}
+
+.input-box input{
+    width: 100%;
+    height: 50px;
+    background: transparent ;
+    border: none;
+    outline: none;
+    font-size: 1em;
+    color: #fff;
+    padding: 10px 10px 10 35px;
+}
+.input-box .icon{
+    position: absolute;
+    right: 8px;
+    line-height: 57px;
+    font-size: 1.2em;
+    color: #fff;
+    left: 10px;
+}
+.remember-forgot{
+    
+    font-size: 0.9em;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 10px;
+    margin-bottom: 15px;
+}
+.remember-forgot label input {
+    margin-right: 3px;
+}
+.remember-forgot a{
+    color: #fff;
+    text-decoration: none;
+}
+.remember-forgot a:hover{
+    text-decoration: underline;
+}
+button{
+   width: 100%;
+   height: 40px;
+   background-color: #fff;
+   border: none;
+   outline: none;
+   border-radius: 20px; 
+   cursor: pointer;
+   font-size: 1em;
+   color: #000;
+   font-weight: 500; 
+   margin-top: 10px; 
+   display: block;   
+   text-align: center;
+   transition: 0.3s ease-in-out;
+}
+button:hover {
+    background-color: #123456; 
+    color: white; 
+    transform: scale(1.05); 
+    box-shadow: 0px 0px 10px rgba(24, 8, 104, 0.5); 
+}
+.register-link{
+    font-size: 0.9em;
+    color: #fff;
+    text-align: center;
+    margin-top: 10px;
+    display: block;
+}
+.register-link p a{
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    display: block;
+
+}
+.register-link p a:hover{
+    text-decoration: underline;
+}
+@media (max-width:360px){
+    .login-box{
+        width: 100%;
+        height: 100vh;
+        border:none;
+        border-radius: 0;
+    }
+    .input-box{
+        width: 290px;
+    }
+}
