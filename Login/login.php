@@ -19,7 +19,7 @@ if (isset($_POST['Login'])) {
         if (password_verify($password, $row['password'])) {
             $_SESSION['email'] = $row['email']; // Store email in session
             $_SESSION['fullName'] = $row['fullName']; // Store full name in session
-            header("Location: homepage.php"); // Redirect to homepage
+            header("Location: opfdInterface.html"); // Redirect to homepage
             exit();
         } else {
             echo "Invalid email or password!";
