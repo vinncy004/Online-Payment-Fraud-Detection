@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <section>
+        <div class="login-box">
+            <form action="">
+                <h2>Login</h2>
+
+                <div class="input-box">
+                    <span class="icon">
+                        <ion-icon name="mail"></ion-icon>
+                    </span>
+                    <input type="email" required>
+                    <label>Email</label>
+                </div>
+
+                <div class="input-box">
+                    <span class="icon">
+                        <ion-icon name="lock-closed"></ion-icon>
+                    </span>
+                    <input type="password" required>
+                    <label>Password</label>
+                </div>
+
+                <!-- Keep only 'Remember me' and 'Forgot Password' here -->
+                <div class="remember-forgot">
+                    <div class="remember">
+                        <input type="checkbox" id="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <div class="forgot">
+                        <a href="#">Forgot Password?</a>
+                    </div>
+                </div>
+
+                <!-- Move the button below -->
+                <button type="submit">Login</button>
+
+                <!-- Move 'Register' below the button -->
+                <div class="register-link">
+                    <p>Don't have an account? <a href="registration.html">Register</a></p>
+                </div>
+
+            </form>
+        </div>
+    </section>
+
+    <script type="module" src="Assets/ionicons.esm.js"></script>
+    <script nomodule src="Assets/ionicons.js"></script>
+</body>
+</html>

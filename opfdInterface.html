@@ -41,8 +41,8 @@
             border-radius: 5px;
         }
         button:hover{
-            background-color: cyan;
-            color: black;
+            background-color: rgb(23, 21, 155);
+            color: rgb(255, 255, 255);
         }
         .container ul{
             width: 100%;
@@ -65,10 +65,10 @@
         a{
             text-decoration: none;
             text-transform: capitalize;
-            color: red;
+            color: rgb(0, 248, 132);
         }
         a:hover{
-            color: cyan;
+            color: rgb(66, 255, 255);
             animation:ease-in-out .5s;
         }
 
@@ -79,109 +79,127 @@
         <div class="screen" id="screen">
             <button id="log-out"><a href="logspage.html">log out</a></button>
        <div id="reviews">
-        <p>logged in at  <span id="hours"></span>:<span id="minutes"></span>:<span id="sec"></span></p>
+        <p>logged in at  <span id="hours"></span>:<span id="minutes"></span>:<span id="sec"></span><span id="am"></span></p>
         <p>device logged ip >><span id="ipaddress"></span></p>
+        <p style="color: rgb(230, 48, 48);" id="unusualLog"></p>
+        <p id="location">waiting location information...</p>
        </div>
         </div>
         <ul>
-           <li> <button onclick="" id="payment">payment</button></li>
-           <li> <button onclick=""id="transactions">transcations</button></li>
+           <li> <button onclick="" id="payment"><a href="mpesa.html">payment</a></button></li>
+           <li> <button onclick=""id="transactions"><a href="transcation.html">transaction</a></button></li>
            <li> <button onclick="locationChangeNotifier() "id="reviews">review</button></li>
            <li> <button onclick=""id="report">report</button></li>
         </ul>
     </div>
+    
     <script type="text/javascript">
-         function locationChangeNotifier() {
-    // Check if browser supports both Notification and Geolocation APIs
-    if (!("Notification" in window) || !("geolocation" in navigator)) {
-        console.log("This browser doesn't support notifications or geolocation");
-        return;
-    }
-
-    // Request notification permission
-    Notification.requestPermission().then(permission => {
-        if (permission !== "granted") {
-            console.log("Notification permission denied");
-            return;
-        }
-
-        // Store previous position
-        let previousPosition = null;
-
-        // Options for geolocation watching
-        const geoOptions = {
-            enableHighAccuracy: true,
-            timeout: 5000,
-            maximumAge: 0
-        };
-
         // Function to calculate distance between two coordinates (in kilometers)
-        function calculateDistance(lat1, lon1, lat2, lon2) {
-            const R = 6371; // Earth's radius in kilometers
-            const dLat = (lat2 - lat1) * Math.PI / 180;
-            const dLon = (lon2 - lon1) * Math.PI / 180;
-            const a = 
-                Math.sin(dLat/2) * Math.sin(dLat/2) +
-                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
-                Math.sin(dLon/2) * Math.sin(dLon/2);
-            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-            return R * c;
-        }
+function calculateDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371; // Earth's radius in kilometers
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = 
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c; // Distance in kilometers
+}
 
-        // Watch position changes
-        navigator.geolocation.watchPosition(
+// Function to get current geolocation
+function getCurrentGeolocation(callback) {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
             (position) => {
-                const currentPosition = {
+                const currentLocation = {
                     latitude: position.coords.latitude,
                     longitude: position.coords.longitude,
-                    timestamp: new Date(position.timestamp)
+                    timestamp: new Date().getTime() // Store as milliseconds
                 };
-
-                // If we have a previous position, check if location changed significantly
-                if (previousPosition) {
-                    const distance = calculateDistance(
-                        previousPosition.latitude,
-                        previousPosition.longitude,
-                        currentPosition.latitude,
-                        currentPosition.longitude
-                    );
-
-                    // Notify if moved more than 0.1 km (100 meters)
-                    if (distance > 0.1) {
-                        const notification = new Notification("Location Changed!", {
-                            body: `Moved ${distance.toFixed(2)} km\nNew position: ${currentPosition.latitude.toFixed(4)}, ${currentPosition.longitude.toFixed(4)}`,
-                            icon: 'http://127.0.0.1:5500/Online-Payment-Fraud-Detection/page1.html' // Optional: add your own icon URL
-                        });
-
-                        // Optional: Log to console
-                        console.log(`Location changed by ${distance.toFixed(2)} km`);
-                    }
-                }
-
-                // Update previous position
-                previousPosition = currentPosition;
+                callback(currentLocation);
             },
             (error) => {
-                console.error("Geolocation error:", error.message);
-                new Notification("Location Error", {
-                    body: `Unable to track location: ${error.message}`
-
-                });
+                console.error('Error getting geolocation:', error.message);
+                callback(null);
             },
-            geoOptions
+            { enableHighAccuracy: true }
         );
+    } else {
+        console.error('Geolocation not supported.');
+        callback(null);
+    }
+}
+
+// Function to check and update location
+function checkGeolocationChange() {
+    getCurrentGeolocation((currentLocation) => {
+        if (!currentLocation) return;
+
+        // Get the previous location from localStorage
+        const storedLocation = localStorage.getItem('previousLocation');
+        const previousLocation = storedLocation ? JSON.parse(storedLocation) : null;
+
+        // Get the paragraph element
+        const locationPara = document.getElementById('location');
+
+        if (previousLocation) {
+            const timeDiff = (currentLocation.timestamp - previousLocation.timestamp) / 1000 / 60; // Minutes
+            const distance = calculateDistance(
+                previousLocation.latitude, previousLocation.longitude,
+                currentLocation.latitude, currentLocation.longitude
+            );
+
+            // Check if distance > 1000 km and time < 10 minutes
+            if (distance > 1000 && timeDiff <= 10) {
+                const message = `Rapid movement detected! Moved ${distance.toFixed(2)} km in ${timeDiff.toFixed(2)} minutes. ` +
+                                `From (Lat: ${previousLocation.latitude}, Lon: ${previousLocation.longitude}) ` +
+                                `to (Lat: ${currentLocation.latitude}, Lon: ${currentLocation.longitude})`;
+                if (locationPara) {
+                    locationPara.textContent = message;
+                }
+                console.log(message);
+            } else if (locationPara) {
+                locationPara.textContent = `Distance: ${distance.toFixed(2)} km, Time: ${timeDiff.toFixed(2)} min (No rapid change)`;
+            }
+        } else if (locationPara) {
+            locationPara.textContent = 'No previous location yet.';
+        }
+
+        // Store the current location as the new previous location
+        localStorage.setItem('previousLocation', JSON.stringify(currentLocation));
     });
 }
+
+// Run every 5 seconds
+setInterval(checkGeolocationChange, 60000);
+
+// Initial call on page load
+checkGeolocationChange();
+
 function time(){
     const now=new Date();
     const hours=now.getHours().toString().padStart(2, '0');
     const minutes=now.getMinutes().toString().padStart(2, '0');
     const seconds=now.getSeconds().toString().padStart(2, '0');
-
+     
     document.getElementById("hours").textContent=hours;
     document.getElementById("minutes").textContent=minutes;
     document.getElementById("sec").textContent=seconds;
+    if(hours>=12){
+        let a=document.getElementById('am').textContent=" PM"
+        
+    }else{
+         a=document.getElementById('am').textContent=" AM"
+    }
 
+    
+
+    if(hours>9){
+        document.getElementById('unusualLog').textContent="unusual login detected on ("+hours+" : "+minutes+`${a}`+ ") if not you change your pasword"
+       
+    }
+   
 }
 time();
 function getip(){
@@ -194,7 +212,7 @@ async function getIPAddress() {
         return data.ip;
     } catch (error) {
         console.error('Error fetching IP:', error);
-        document.getElementById('ipaddress').textContent = 'Unable to get IP';
+        document.getElementById('ipaddress').textContent = 'Unable to get IP seems you lack internet connection';
     }
 }
 
@@ -202,6 +220,8 @@ async function getIPAddress() {
   
 }
 getip();
+
+
     </script>
 </body>
 </html>
