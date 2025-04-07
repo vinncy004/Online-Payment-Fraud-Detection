@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraud Management System</title>
+    <link rel="stylesheet" href="wb.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="fraud-management-system">
+        <header>
+            <h1><i class="fas fa-user-shield"></i> Fraud Management System</h1>
+            <p>Manage blacklisted and whitelisted entities with detailed tracking</p>
+        </header>
+
+        <div class="management-panel">
+            <div class="controls">
+                <div class="entity-selector">
+                    <select id="entity-type">
+                        <option value="user">User</option>
+                        <option value="device">Device</option>
+                        <option value="payment">Payment Method</option>
+                        <option value="ip">IP Address</option>
+                    </select>
+                    <button id="add-manual"><i class="fas fa-plus"></i> Add Manually</button>
+                </div>
+
+                <div class="search-filter">
+                    <input type="text" id="search-input" placeholder="Search...">
+                    <select id="status-filter">
+                        <option value="all">All Statuses</option>
+                        <option value="blacklisted">Blacklisted Only</option>
+                        <option value="whitelisted">Whitelisted Only</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="entity-table-container">
+                <table id="entity-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Type</th>
+                            <th>Details</th>
+                            <th>Status</th>
+                            <th>Date Added</th>
+                            <th>Last Activity</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Entities will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination">
+                <button id="prev-page"><i class="fas fa-chevron-left"></i></button>
+                <span id="page-info">Page 1 of 1</span>
+                <button id="next-page"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+
+        <!-- Add Entity Modal -->
+        <div class="modal" id="add-entity-modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2><i class="fas fa-plus-circle"></i> Add New Entity</h2>
+                
+                <form id="entity-form">
+                    <div class="form-group">
+                        <label for="entity-type-input">Entity Type</label>
+                        <select id="entity-type-input" required>
+                            <option value="">Select type...</option>
+                            <option value="user">User</option>
+                            <option value="device">Device</option>
+                            <option value="payment">Payment Method</option>
+                            <option value="ip">IP Address</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="user-fields">
+                        <label for="user-id">User ID</label>
+                        <input type="text" id="user-id" placeholder="Enter user ID">
+                        <label for="user-email">Email</label>
+                        <input type="email" id="user-email" placeholder="Enter email">
+                        <label for="user-phone">Phone</label>
+                        <input type="tel" id="user-phone" placeholder="Enter phone number">
+                    </div>
+
+                    <div class="form-group" id="device-fields" style="display:none;">
+                        <label for="device-id">Device ID</label>
+                        <input type="text" id="device-id" placeholder="Enter device ID">
+                        <label for="device-type">Device Type</label>
+                        <input type="text" id="device-type" placeholder="e.g., iPhone, Android">
+                        <label for="device-os">Operating System</label>
+                        <input type="text" id="device-os" placeholder="e.g., iOS 15, Android 12">
+                    </div>
+
+                    <div class="form-group" id="payment-fields" style="display:none;">
+                        <label for="payment-id">Payment ID</label>
+                        <input type="text" id="payment-id" placeholder="Enter payment ID">
+                        <label for="payment-type">Payment Type</label>
+                        <select id="payment-type">
+                            <option value="credit_card">Credit Card</option>
+                            <option value="debit_card">Debit Card</option>
+                            <option value="paypal">PayPal</option>
+                            <option value="bank_transfer">Bank Transfer</option>
+                        </select>
+                        <label for="payment-last4">Last 4 Digits</label>
+                        <input type="text" id="payment-last4" placeholder="Last 4 digits" maxlength="4">
+                    </div>
+
+                    <div class="form-group" id="ip-fields" style="display:none;">
+                        <label for="ip-address">IP Address</label>
+                        <input type="text" id="ip-address" placeholder="Enter IP address">
+                        <label for="ip-location">Location</label>
+                        <input type="text" id="ip-location" placeholder="Enter location">
+                        <label for="ip-isp">ISP</label>
+                        <input type="text" id="ip-isp" placeholder="Enter ISP">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="entity-reason">Reason</label>
+                        <textarea id="entity-reason" placeholder="Enter reason for blacklisting/whitelisting"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Action</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="entity-action" value="blacklist" checked> Blacklist</label>
+                            <label><input type="radio" name="entity-action" value="whitelist"> Whitelist</label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-submit"><i class="fas fa-save"></i> Save Entity</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Entity Detail Modal -->
+        <div class="modal" id="entity-detail-modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2 id="detail-title"><i class="fas fa-info-circle"></i> Entity Details</h2>
+                <div class="detail-content" id="entity-details">
+                    <!-- Details will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <div class="status-alert" id="status-alert"></div>
+    </div>
+
+    <script src="wb.js"></script>
+</body>
+</html>

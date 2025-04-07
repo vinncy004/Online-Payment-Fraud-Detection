@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraud Detection Alert System</title>
+    <link rel="stylesheet" href="noti.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="notification-dashboard">
+        <header>
+            <h1><i class="fas fa-shield-alt"></i> Fraud Alert System</h1>
+            <p>Immediate notifications for suspicious transactions</p>
+        </header>
+
+        <div class="alert-controls">
+            <div class="contact-settings">
+                <h2><i class="fas fa-address-book"></i> Recipient Settings</h2>
+                <div class="form-group">
+                    <label for="email-recipient">Email Recipient</label>
+                    <input type="email" id="email-recipient" value="">
+                </div>
+                <div class="form-group">
+                    <label for="sms-recipient">SMS Recipient</label>
+                    <input type="tel" id="sms-recipient" value="">
+                </div>
+            </div>
+
+            <div class="alert-composer">
+                <h2><i class="fas fa-edit"></i> Compose Alert</h2>
+                <div class="form-group">
+                    <label for="alert-type">Alert Type</label>
+                    <select id="alert-type">
+                        <option value="high-risk">High Risk Transaction</option>
+                        <option value="suspicious-login">Suspicious Login</option>
+                        <option value="account-takeover">Account Takeover Attempt</option>
+                        <option value="custom">Custom Alert</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="alert-subject">Subject</label>
+                    <input type="text" id="alert-subject" placeholder="Enter alert subject">
+                </div>
+
+                <div class="form-group">
+                    <label for="alert-message">Message</label>
+                    <textarea id="alert-message" rows="5" placeholder="Enter detailed alert message..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Notification Channels</label>
+                    <div class="channel-options">
+                        <label><input type="checkbox" id="send-email" checked> <i class="fas fa-envelope"></i> Email</label>
+                        <label><input type="checkbox" id="send-sms" checked> <i class="fas fa-sms"></i> SMS</label>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button id="send-alert" class="btn-send">
+                        <i class="fas fa-paper-plane"></i> Send Immediate Alert
+                    </button>
+                    <button id="test-alert" class="btn-test">
+                        <i class="fas fa-vial"></i> Send Test Notification
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="notification-history">
+            <h2><i class="fas fa-history"></i> Notification Log</h2>
+            <div class="history-controls">
+                <select id="history-filter">
+                    <option value="all">All Notifications</option>
+                    <option value="email">Email Only</option>
+                    <option value="sms">SMS Only</option>
+                    <option value="today">Today</option>
+                </select>
+                <button id="clear-history" class="btn-clear">
+                    <i class="fas fa-trash"></i> Clear History
+                </button>
+            </div>
+            <div class="history-list" id="notification-list">
+                
+            </div>
+        </div>
+
+        <div class="status-alert" id="status-alert"></div>
+    </div>
+
+    <script src="noti.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Behavior Analysis | Fraud Detection</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment"></script>
+</head>
+<body>
+    <div class="dashboard">
+        <header>
+            <h1>User Behavior Analytics</h1>
+            <p>Fraud Detection System</p>
+        </header>
+
+        <div class="user-selector">
+            <select id="userSelect">
+                <option value="">Select a user...</option>
+            </select>   
+            <button id="analyzeBtn">Analyze Behavior</button>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="card">
+                <h2>Login Patterns</h2>
+                <canvas id="loginChart"></canvas>
+                <div class="anomaly-detection" id="loginAnomalies"></div>
+            </div>
+
+            <div class="card">
+                <h2>Device Usage</h2>
+                <canvas id="deviceChart"></canvas>
+                <div class="anomaly-detection" id="deviceAnomalies"></div>
+            </div>
+
+            <div class="card">
+                <h2>Spending Habits</h2>
+                <canvas id="spendingChart"></canvas>
+                <div class="anomaly-detection" id="spendingAnomalies"></div>
+            </div>
+
+            <div class="card full-width">
+                <h2>Fraud Risk Assessment</h2>
+                <div class="risk-meter">
+                    <div class="risk-level" id="riskLevel"></div>
+                    <div class="risk-score" id="riskScore"></div>
+                </div>
+                <div class="recommendation" id="recommendation"></div>
+                <div class="suspicious-activities" id="suspiciousActivities"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
